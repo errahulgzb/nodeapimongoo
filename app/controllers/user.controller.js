@@ -61,11 +61,38 @@ user.save()
 
 // Retrieve and return all notes from the database.
 exports.findAll = (req, res) => {
+  User.find()
+    .then(users => {
+        res.send(users);
+    }).catch(err => {
+        res.status(500).send({
+            message: err.message || "Some error occurred while retrieving notes."
+        });
+    });
 
 };
 
 // Find a single note with a noteId
 exports.findOne = (req, res) => {
+  console.log(req.params);
+  User.findById(req.params.user_id)
+    .then(user => {
+        if(!user) {
+            return res.status(404).send({
+                message: "User not found with id " + req.params.user_id
+            });            
+        }
+        res.send(user);
+    }).catch(err => {
+        if(err.kind === 'ObjectId') {
+            return res.status(404).send({
+                message: "User not found with id " + req.params.user_id
+            });                
+        }
+        return res.status(500).send({
+            message: "Error retrieving note with id " + req.params.user_id
+        });
+    });
 
 };
 
