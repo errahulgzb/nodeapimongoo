@@ -12,7 +12,11 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // parse requests of content-type - application/json
-app.use(bodyParser.json());
+///app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({'extended': 'true'})); // parse application/x-www-form-urlencoded
+app.use(bodyParser.json()); // parse application/json
+app.use(bodyParser.json({type: 'application/vnd.api+json'})); // parse application/vnd.api+json as json
+
 app.use(expressValidator());
 // Require Notes routes
 require('./app/routes/routes.js')(app);
@@ -29,7 +33,7 @@ mongoose.connect(dbConfig.url, {
     process.exit();
 });
 
-7017530342
+
 // listen for requests
 app.listen(3000, () => {
   console.log("Server is listening on port 3000");

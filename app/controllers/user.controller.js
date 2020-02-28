@@ -4,79 +4,28 @@ const { validationResult } = require('express-validator/check');
 
 // Create and Save a new Note
 exports.create = (req, res) => {
-  //console.log(req.body);
-  const errors = validationResult(req); // Finds the validation errors in this request and wraps them in an object with handy functions
-  console.log(errors);
-      if (!errors.isEmpty()) {
-        res.status(422).json({ errors: errors.array() });
-        return;
-      }
-
-  // const v = new Validator(req.body, {
-  //   name: 'required',
-  //   useremail: 'required|email'
-  // });
-  // v.check().then((matched) => {
-  //   if (!matched) {
-  //     res.status(422).send(v.errors);
-  //   }
-  // });
-
-  ///console.log(v,"hellotest");
-  // Validate request
-  // if(!req.body.name) {
-  //   return res.status(400).send({
-  //       status:false,
-  //       message: "User Name can not be empty"
-  //   });
-  // }
-
-  // if(!req.body.useremail) {
-  //   return res.status(400).send({
-  //       status:false,
-  //       message: "User Email Id can not be empty"
-  //   });
-  // }
-  // if(!req.body.username) {
-  //   return res.status(400).send({
-  //       status:false,
-  //       message: "Username can not be empty"
-  //   });
-  // }
-  // if(!req.body.password) {
-  //   return res.status(400).send({
-  //       status:false,
-  //       message: "User password can not be empty"
-  //   });
-  // }
-  // if(!req.body.location) {
-  //   return res.status(400).send({
-  //       status:false,
-  //       message: "User location can not be empty"
-  //   });
-  // }
-
+  console.log(req.body);
 // Create a Note
 
-// const user = new User({
-//   name: req.body.name, 
-//   useremail: req.body.useremail, 
-//   username: req.body.username, 
-//   location: req.body.location, 
-//   password: req.body.password
-// });
+const user = new User({ 
+  name: req.body.name, 
+  useremail: req.body.useremail, 
+  username: req.body.username, 
+  location: req.body.location, 
+  password: req.body.password
+});
 
 // Save user in the database
 
-// user.save()
-// .then(data => {
-//     res.send(data);
-// }).catch(err => {
-//     res.status(500).send({
-//         status:false,
-//         message: err.message || "Some error occurred while creating the Note."
-//     });
-// });
+user.save()
+.then(data => {
+    res.send(data);
+}).catch(err => {
+    res.status(500).send({
+        status:false,
+        message: err.message || "Some error occurred while creating the Note."
+    });
+});
 
 };
 
